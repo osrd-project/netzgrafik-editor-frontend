@@ -1,3 +1,38 @@
+# Netzgrafik-Editor's OSRD fork
+
+Our fork uses the branch `standalone`, regularily rebased onto the base
+repository's `main` branch. We try to keep the list of patches applied on top
+of the base repository as small as possible, ideally upstreaming them little by
+little when it makes sense.
+
+A new NPM package is automatically published on all pushes to any branch of the
+fork. The list of versions can be seen here:
+https://www.npmjs.com/package/@osrd-project/netzgrafik-frontend?activeTab=versions
+
+## Initial setup
+
+Clone the base repository, add OSRD's fork as a separate remote, checkout the
+fork's branch:
+
+```sh
+git clone git@github.com:SchweizerischeBundesbahnen/netzgrafik-editor-frontend.git
+cd netzgrafik-editor-frontend
+git remote add osrd-project git@github.com:osrd-project/netzgrafik-editor-frontend.git
+git fetch osrd-project
+git checkout standalone
+```
+
+## Pulling in changes from the base repository
+
+Fetch changes from the base repository and rebase our fork:
+
+```sh
+git fetch --all
+git reset --hard osrd-project/standalone
+git rebase origin/main
+git push --force-with-lease
+```
+
 # Netzgrafik-Editor
 
 <details>
