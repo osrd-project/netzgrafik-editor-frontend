@@ -117,10 +117,11 @@ export class LoadPerlenketteService implements OnDestroy {
     const bothEndNodes = this.trainrunService.getBothEndNodesWithTrainrunId(
       trainrun.getId(),
     );
-    const startForwardNode = GeneralViewFunctions.getLeftOrTopNode(
+    /*const startForwardNode = GeneralViewFunctions.getLeftOrTopNode(
       bothEndNodes.endNode1,
       bothEndNodes.endNode2,
-    );
+    );*/
+    const startForwardNode = bothEndNodes.endNode2;
     if (startForwardNode) {
       const startTrainrunSection = startForwardNode.getStartTrainrunSection(
         trainrun.getId(),
