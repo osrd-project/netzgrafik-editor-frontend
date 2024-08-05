@@ -321,10 +321,11 @@ export class TrainrunsectionHelper {
       ) !== undefined;
     let leftNode;
     if (!bothNodesFound) {
-      leftNode = GeneralViewFunctions.getLeftOrTopNode(
+      /*leftNode = GeneralViewFunctions.getLeftOrTopNode(
         bothLastNonStopNodes.lastNonStopNode1,
         bothLastNonStopNodes.lastNonStopNode2,
-      );
+      );*/
+      leftNode = bothLastNonStopNodes.lastNonStopNode2;
     } else {
       leftNode = GeneralViewFunctions.getLeftNodeAccordingToOrder(
         orderedNodes,
@@ -349,10 +350,11 @@ export class TrainrunsectionHelper {
       ) !== undefined;
     let rightNode;
     if (!bothNodesFound) {
-      rightNode = GeneralViewFunctions.getRightOrBottomNode(
+      /*rightNode = GeneralViewFunctions.getRightOrBottomNode(
         bothLastNonStopNodes.lastNonStopNode1,
         bothLastNonStopNodes.lastNonStopNode2,
-      );
+      );*/
+      rightNode = bothLastNonStopNodes.lastNonStopNode1;
     } else {
       rightNode = GeneralViewFunctions.getRightNodeAccordingToOrder(
         orderedNodes,
