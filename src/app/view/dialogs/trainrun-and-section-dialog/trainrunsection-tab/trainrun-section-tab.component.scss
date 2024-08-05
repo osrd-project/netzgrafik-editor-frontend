@@ -396,7 +396,8 @@ div.sbb-dialog-content.sbb-scrollbar.EditTrainrunSectionDialogTabContent {
   border-style: none;
   min-height: 250px;
   max-height: 250px;
-  padding-top: 30px;
+  /*padding-top: 30px;*/
+  padding-top: 50px;
   padding-bottom: 0px;
 }
 
@@ -405,4 +406,15 @@ div.sbb-dialog-content.sbb-scrollbar.EditTrainrunSectionDialogTabContent {
   padding: 0 15px 0 0;
   max-height: 48px;
   min-height: 48px;
+}
+
+::ng-deep .NodeRightDeparture,
+::ng-deep .NodeRightDepartureTime,
+::ng-deep .NodeRightDeparturePlus,
+::ng-deep .NodeRightDepartureMinus,
+::ng-deep .NodeLeftArrival,
+::ng-deep .NodeLeftArrivalTime,
+::ng-deep .NodeLeftArrivalPlus,
+::ng-deep .NodeLeftArrivalMinus {
+  display: none;
 }

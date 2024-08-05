@@ -93,6 +93,10 @@ svg text.edge_text {
       grid-row: 7 / span 3;
     }
 
+    .nodeBorderContainerTopLeft, .nodeBorderContainerBottomLeft {
+      display: none;
+    }
+
     .nodeMinus {
       grid-column: 1;
       grid-row: 1;
@@ -196,4 +200,8 @@ g.edge.Lines:hover {
 button.FunctionButton.Rotation90.disabled {
   pointer-events: none;
   opacity: 0;
+}
+
+.leftArrivalTime, .rightDepartureTime {
+  display: none;
 }
