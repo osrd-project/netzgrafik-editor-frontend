@@ -40,7 +40,7 @@
       <sbb-icon svgIcon="download-small" aria-hidden="false"></sbb-icon>
     </button>
     {{ 'app.view.editor-side-view.editor-tools-view-component.export-netzgrafik-as-json' | translate }}
-    <br />
+    <!--<br />
     <button
       (click)="onLoadButton()"
       [title]="'app.view.editor-side-view.editor-tools-view-component.import-netzgrafik' | translate"
@@ -55,7 +55,7 @@
       accept=".json"
       (change)="onLoad($event)"
     />
-    {{ 'app.view.editor-side-view.editor-tools-view-component.import-netzgrafik-as-json' | translate }}
+    {{ 'app.view.editor-side-view.editor-tools-view-component.import-netzgrafik-as-json' | translate }}-->
     <br />
     <button
       (click)="onExportZuglauf()"
@@ -71,6 +71,7 @@
   </sbb-expansion-panel>
   <sbb-expansion-panel [expanded]="false">
     <sbb-expansion-panel-header>{{ 'app.view.editor-side-view.editor-tools-view-component.base-data' | translate }}</sbb-expansion-panel-header>
+    <!--
     <button
       (click)="onLoadStammdatenButton()"
       [title]="'app.view.editor-side-view.editor-tools-view-component.import-base-data' | translate"
@@ -92,7 +93,7 @@
       accept=".csv"
       (change)="onLoadStammdaten($event)"
     />
-    <br />
+    <br />-->
     <button
       (click)="onExportStammdaten()"
       [title]="'app.view.editor-side-view.editor-tools-view-component.export-base-data' | translate"
