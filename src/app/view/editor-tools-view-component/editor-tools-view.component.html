@@ -59,7 +59,8 @@
     {{
       "app.view.editor-side-view.editor-tools-view-component.export-netzgrafik-as-json" | translate
     }}
-    <ng-container *ngIf="getVariantIsWritable()">
+    <!--
+      <ng-container *ngIf="getVariantIsWritable()">   
       <br />
       <button
         (click)="onLoadButton()"
@@ -75,8 +76,8 @@
         "app.view.editor-side-view.editor-tools-view-component.import-netzgrafik-as-json"
           | translate
       }}
-    </ng-container>
-
+     </ng-container>
+     -->
     <br />
     <button
       (click)="onExportZuglauf()"
@@ -152,7 +153,7 @@
     <sbb-expansion-panel-header>{{
       "app.view.editor-side-view.editor-tools-view-component.base-data" | translate
     }}</sbb-expansion-panel-header>
-    <ng-container *ngIf="getVariantIsWritable()">
+    <!-- <ng-container *ngIf="getVariantIsWritable()">
       <button
         (click)="onLoadBaseDataButton()"
         [title]="
@@ -177,7 +178,7 @@
         (change)="onLoadBaseData($event)"
       />
       <br />
-    </ng-container>
+    </ng-container>-->
     <button
       (click)="onExportBaseData()"
       [title]="'app.view.editor-side-view.editor-tools-view-component.export-base-data' | translate"
