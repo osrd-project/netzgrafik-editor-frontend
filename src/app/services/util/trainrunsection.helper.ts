@@ -365,22 +365,31 @@ export class TrainrunsectionHelper {
         : "sourceToTarget",
     );
 
+    const leftDeparture = lastLeftNode.getDepartureTime(leftTrainrunSection);
+    const rightArrival = lastRightNode.getArrivalTime(rightTrainrunSection);
+    const leftArrival = lastLeftNode.getArrivalTime(leftTrainrunSection);
+    const rightDeparture = lastRightNode.getDepartureTime(rightTrainrunSection);
+
     const totalForwardDuration =
-      lastRightNode.getArrivalTime(rightTrainrunSection) -
-      lastLeftNode.getDepartureTime(leftTrainrunSection);
+      rightArrival !== null && leftDeparture !== null ? rightArrival - leftDeparture : null;
     const totalBackwardDuration =
-      lastLeftNode.getArrivalTime(leftTrainrunSection) -
-      lastRightNode.getDepartureTime(rightTrainrunSection);
+      leftArrival !== null && rightDeparture !== null ? leftArrival - rightDeparture : null;
 
     return {
-      leftDepartureTime: lastLeftNode.getDepartureTime(leftTrainrunSection),
-      leftArrivalTime: lastLeftNode.getArrivalTime(leftTrainrunSection),
-      rightDepartureTime: lastRightNode.getDepartureTime(rightTrainrunSection),
-      rightArrivalTime: lastRightNode.getArrivalTime(rightTrainrunSection),
-      travelTime: cumulativeTravelTime,
-      bottomTravelTime: cumulativeBottomTravelTime,
-      stopTime: MathUtils.mod60(totalForwardDuration - cumulativeTravelTime),
-      bottomStopTime: MathUtils.mod60(totalBackwardDuration - cumulativeBottomTravelTime),
+      leftDepartureTime: leftDeparture,
+      leftArrivalTime: leftArrival,
+      rightDepartureTime: rightDeparture,
+      rightArrivalTime: rightArrival,
+      travelTime: cumulativeTravelTime || null,
+      bottomTravelTime: cumulativeBottomTravelTime || null,
+      stopTime:
+        totalForwardDuration !== null
+          ? MathUtils.mod60(totalForwardDuration - cumulativeTravelTime)
+          : null,
+      bottomStopTime:
+        totalBackwardDuration !== null
+          ? MathUtils.mod60(totalBackwardDuration - cumulativeBottomTravelTime)
+          : null,
     };
   }
 
