@@ -56,7 +56,8 @@ const timeCoordinates = {
   },
 };
 type KeyOfTimeCoordinates = keyof (
-  typeof timeCoordinates.leftHand | typeof timeCoordinates.rightHand
+  | typeof timeCoordinates.leftHand
+  | typeof timeCoordinates.rightHand
 );
 @Component({
   selector: "sbb-perlenkette-section",
@@ -606,6 +607,9 @@ export class PerlenketteSectionComponent implements OnInit, AfterContentInit, On
   }
 
   getTravelTime() {
+    if (this.trainrunSectionTimesService.getTimeStructure().travelTime === null) {
+      return null;
+    }
     return this.getTopOrBottomTravelTime("top");
   }
 
@@ -720,7 +724,10 @@ export class PerlenketteSectionComponent implements OnInit, AfterContentInit, On
     this.trainrunSectionTimesService.onBottomTravelTimeChanged();
   }
 
-  private roundTime(time: number) {
+  roundTime(time: number) {
+    if (time === null) {
+      return time;
+    }
     return MathUtils.round(time, this.filterService.getTimeDisplayPrecision());
   }
 
