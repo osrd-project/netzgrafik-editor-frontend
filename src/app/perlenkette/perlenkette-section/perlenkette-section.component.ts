@@ -614,6 +614,9 @@ export class PerlenketteSectionComponent implements OnInit, AfterContentInit, On
   private getTopOrBottomTravelTime(side: "top" | "bottom") {
     const timeStructure = this.trainrunSectionTimesService.getTimeStructure();
     const travelTime = side === "top" ? timeStructure.travelTime : timeStructure.bottomTravelTime;
+    if (travelTime === null) {
+      return null;
+    }
 
     if (
       TrainrunSectionsView.getNode(this.trainrunSection, true).isNonStop(this.trainrunSection) ||
@@ -719,6 +722,9 @@ export class PerlenketteSectionComponent implements OnInit, AfterContentInit, On
   }
 
   private roundTime(time: number) {
+    if (time === null) {
+      return time;
+    }
     return MathUtils.round(time, this.filterService.getTimeDisplayPrecision());
   }
 
