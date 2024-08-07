@@ -983,7 +983,7 @@ export class TrainrunSectionService implements OnDestroy {
     // Source to target
     const totalCumulativeTravelTime =
       this.trainrunService.getCumulativeTravelTime(updatedTrainrunSection);
-    const travelTimeFactor = chainTimeStructure.travelTime / totalCumulativeTravelTime;
+    const travelTimeFactor = chainTimeStructure.travelTime / (totalCumulativeTravelTime || 1);
     const tempTimeStructure: PartialTimeStructure = {
       departureTime: chainTimeStructure.sourceDepartureTime,
       travelTime: null,
@@ -1018,7 +1018,7 @@ export class TrainrunSectionService implements OnDestroy {
       backwardPairs[0].trainrunSection,
     );
     const backwardTravelTimeFactor =
-      chainTimeStructure.backwardTravelTime / totalCumulativeBackwardTravelTime;
+      chainTimeStructure.backwardTravelTime / (totalCumulativeBackwardTravelTime || 1);
     tempTimeStructure.departureTime = chainTimeStructure.targetDepartureTime;
     let summedBackwardTravelTime = 0;
     backwardPairs.forEach((pair) => {
