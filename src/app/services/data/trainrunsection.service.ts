@@ -904,7 +904,7 @@ export class TrainrunSectionService implements OnDestroy {
     totalCumulativeTravelTime: number;
     precision: number;
   }) {
-    const travelTimeFactor = groupTravelTime / totalCumulativeTravelTime;
+    const travelTimeFactor = groupTravelTime / (totalCumulativeTravelTime || 1);
     let departureTime = groupDepartureTime;
     let summedTravelTime = 0;
     let stopTime = 0;
