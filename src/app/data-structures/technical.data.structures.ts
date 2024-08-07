@@ -109,8 +109,8 @@ export interface TimeFormatter {
  * Represents the time data in TrainrunSectionDto.
  */
 export interface TimeLockDto {
-  time: number; // minutes [0..60]
-  consecutiveTime: number; // automatically updated after any data changes in the application
+  time: number | null; // minutes [0..60]
+  consecutiveTime: number | null; // automatically updated after any data changes in the application
   lock: boolean; // used to stop the time propagation (forward/backward)
   warning?: WarningDto; // warning - if business logic detects an issue -> set human-readable warning
   timeFormatter?: TimeFormatter; // undefined or object - optional
