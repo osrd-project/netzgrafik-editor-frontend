@@ -159,6 +159,10 @@ export class TrainrunSection {
   }
 
   private static formatDisplayText(time: TimeLockDto, offset: number): string | undefined {
+    if (time.time === null) {
+      return "?";
+    }
+
     if (!time?.timeFormatter?.stylePattern) {
       return undefined;
     }
