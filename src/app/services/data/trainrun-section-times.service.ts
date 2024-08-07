@@ -491,22 +491,22 @@ export class TrainrunSectionTimesService {
       this.initialLeftAndRightElement ===
       LeftAndRightElement.LeftRightTrainrunName
     ) {
-      this.timeStructure.leftDepartureTime =
+      this.timeStructure.leftDepartureTime = this.timeStructure.leftDepartureTime === null ? null :
         (this.timeStructure.leftDepartureTime + this.offset) % 60;
-      this.timeStructure.rightArrivalTime =
+      this.timeStructure.rightArrivalTime = this.timeStructure.rightArrivalTime === null ? null :
         (this.timeStructure.rightArrivalTime + this.offset) % 60;
-      this.timeStructure.leftArrivalTime =
+      this.timeStructure.leftArrivalTime = this.timeStructure.leftArrivalTime === null ? null :
         (maxMinutes + this.timeStructure.leftArrivalTime - this.offset) % 60;
-      this.timeStructure.rightDepartureTime =
+      this.timeStructure.rightDepartureTime = this.timeStructure.rightDepartureTime === null ? null :
         (maxMinutes + this.timeStructure.rightDepartureTime - this.offset) % 60;
     } else {
-      this.timeStructure.leftDepartureTime =
+      this.timeStructure.leftDepartureTime = this.timeStructure.leftDepartureTime === null ? null :
         (maxMinutes + this.timeStructure.leftDepartureTime - this.offset) % 60;
-      this.timeStructure.rightArrivalTime =
+      this.timeStructure.rightArrivalTime = this.timeStructure.rightArrivalTime === null ? null :
         (maxMinutes + this.timeStructure.rightArrivalTime - this.offset) % 60;
-      this.timeStructure.leftArrivalTime =
+      this.timeStructure.leftArrivalTime = this.timeStructure.leftArrivalTime === null ? null :
         (this.timeStructure.leftArrivalTime + this.offset) % 60;
-      this.timeStructure.rightDepartureTime =
+      this.timeStructure.rightDepartureTime = this.timeStructure.rightDepartureTime === null ? null :
         (this.timeStructure.rightDepartureTime + this.offset) % 60;
     }
     this.offsetTransformationActive = true;
@@ -569,25 +569,26 @@ export class TrainrunSectionTimesService {
       this.timeStructure.travelTime,
       timeDisplayPrecision,
     );
+    // Populate travel time here, otherwise it'll be up to
+    // setTimeStructureToTrainrunSections() and it may overwrite values entered
+    // by the user
+    const minTravelTime = 1.0 / Math.pow(10, this.filterService.getTimeDisplayPrecision());
+    if (this.timeStructure.travelTime < 0.1) {
+      this.timeStructure.travelTime = 0.1;
+    }
   }
 
   private fixAllTimesPrecision() {
     const timeDisplayPrecision = 1000;
-    this.timeStructure.leftArrivalTime =
-      Math.round(this.timeStructure.leftArrivalTime * timeDisplayPrecision) /
-      timeDisplayPrecision;
-    this.timeStructure.leftDepartureTime =
-      Math.round(this.timeStructure.leftDepartureTime * timeDisplayPrecision) /
-      timeDisplayPrecision;
-    this.timeStructure.rightArrivalTime =
-      Math.round(this.timeStructure.rightArrivalTime * timeDisplayPrecision) /
-      timeDisplayPrecision;
-    this.timeStructure.rightDepartureTime =
-      Math.round(this.timeStructure.rightDepartureTime * timeDisplayPrecision) /
-      timeDisplayPrecision;
-    this.timeStructure.travelTime =
-      Math.round(this.timeStructure.travelTime * timeDisplayPrecision) /
-      timeDisplayPrecision;
+    const fixPrecision = (time) => {
+      if (time === null) return null;
+      return Math.round(time * timeDisplayPrecision) / timeDisplayPrecision;
+    };
+    this.timeStructure.leftArrivalTime = fixPrecision(this.timeStructure.leftArrivalTime);
+    this.timeStructure.leftDepartureTime = fixPrecision(this.timeStructure.leftDepartureTime);
+    this.timeStructure.rightArrivalTime = fixPrecision(this.timeStructure.rightArrivalTime);
+    this.timeStructure.rightDepartureTime = fixPrecision(this.timeStructure.rightDepartureTime);
+    this.timeStructure.travelTime = fixPrecision(this.timeStructure.travelTime);
   }
 
   private updateTrainrunSectionTime() {
