@@ -618,6 +618,9 @@ export class PerlenketteSectionComponent
   }
 
   getTravelTime() {
+    if (this.trainrunSectionTimesService.getTimeStructure().travelTime === null) {
+      return null;
+    }
     if (
       TrainrunSectionsView.getNode(this.trainrunSection, true).isNonStop(
         this.trainrunSection,
@@ -929,6 +932,9 @@ export class PerlenketteSectionComponent
   }
 
   roundTime(time: number) {
+    if (time === null) {
+      return time;
+    }
     return MathUtils.round(time, this.filterService.getTimeDisplayPrecision());
   }
 
