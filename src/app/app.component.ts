@@ -40,12 +40,14 @@ export class AppComponent {
     return this.authService.claims?.email;
   }
 
-  constructor(private authService: AuthService,
-              private dataService: DataService,
-              private trainrunService: TrainrunService,
-              private trainrunSectionService: TrainrunSectionService,
-              private nodeService: NodeService,
-            ) {
+  constructor(
+    private authService: AuthService,
+    private dataService: DataService,
+    private trainrunService: TrainrunService,
+    private trainrunSectionService: TrainrunSectionService,
+    private nodeService: NodeService,
+    private labelService: LabelService,
+  ) {
     if (!this.disableBackend) {
       this.authenticated = authService.initialized;
     }
@@ -76,5 +78,6 @@ export class AppComponent {
     this.trainrunService.operation,
     this.trainrunSectionService.operation,
     this.nodeService.operation,
+    this.labelService.operation,
   );
 }
