@@ -13,7 +13,8 @@
           [componentLabelRef]="'Trainrun'"
         ></sbb-label-drop-list-component>
       </sbb-expansion-panel>
-      <sbb-expansion-panel [expanded]="false">
+
+      <sbb-expansion-panel [expanded]="false" *ngIf="false">
         <sbb-expansion-panel-header>{{ 'app.view.editor-edit-tools-view-component.nodes' | translate }}</sbb-expansion-panel-header>
         <sbb-label-drop-list-component
           [componentLabelRef]="'Node'"
@@ -31,7 +32,9 @@
 
   <sbb-expansion-panel
     [expanded]="getVariantIsWritable()"
-    [disabled]="!getVariantIsWritable()">
+    [disabled]="!getVariantIsWritable()"
+    *ngIf="false"
+    >
     <sbb-expansion-panel-header>{{ 'app.view.editor-edit-tools-view-component.delete-netzgrafik-title' | translate }}</sbb-expansion-panel-header>
 
     <ng-container
@@ -85,7 +88,9 @@
   </sbb-expansion-panel>
   <sbb-expansion-panel
     [expanded]="false"
-    [disabled]="!getVariantIsWritable()">
+    [disabled]="!getVariantIsWritable()"
+    *ngIf="false"
+    >
     <sbb-expansion-panel-header>
       {{ 'app.view.editor-edit-tools-view-component.merge-netzgrafik-title' | translate }}
     </sbb-expansion-panel-header>
