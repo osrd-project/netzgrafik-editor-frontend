@@ -6,6 +6,7 @@ import {ColorRefType, TimeLockDto, WarningDto} from "../data-structures/technica
 import {TrainrunSectionValidator} from "../services/util/trainrunsection.validator";
 import {formatDate} from "@angular/common";
 import {TrainrunsectionHelper} from "../services/util/trainrunsection.helper";
+import {environment} from "src/environments/environment";
 
 export class TrainrunSection {
   private static currentId = 0;
@@ -543,6 +544,7 @@ export class TrainrunSection {
   }
 
   hasTravelTimeWarning(): boolean {
+    if (environment.disableBackend) return false;
     return this.travelTime.warning !== null;
   }
 
@@ -551,18 +553,22 @@ export class TrainrunSection {
   }
 
   hasSourceDepartureWarning(): boolean {
+    if (environment.disableBackend) return false;
     return this.sourceDeparture.warning !== null;
   }
 
   hasSourceArrivalWarning(): boolean {
+    if (environment.disableBackend) return false;
     return this.sourceArrival.warning !== null;
   }
 
   hasTargetDepartureWarning(): boolean {
+    if (environment.disableBackend) return false;
     return this.targetDeparture.warning !== null;
   }
 
   hasTargetArrivalWarning(): boolean {
+    if (environment.disableBackend) return false;
     return this.targetArrival.warning !== null;
   }
 
