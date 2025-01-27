@@ -407,9 +407,8 @@ export class PerlenketteNodeComponent implements OnInit, AfterViewInit {
   private adjustNodeNameWithEllipsis() {
     const nativeElement = this.elementRef.nativeElement;
     const textElement = nativeElement.querySelector(".node_text");
-    const nodeConnectionTime = nativeElement.querySelector(".node_connection_time").getBBox();
     const mainRect = nativeElement.querySelector(".main_rect").getBBox();
-    this.truncateTextWithEllipsis(textElement, nodeConnectionTime.x - mainRect.x);
+    this.truncateTextWithEllipsis(textElement, mainRect.width);
   }
 
   private adjustTerminalStationWithEllipsis() {
