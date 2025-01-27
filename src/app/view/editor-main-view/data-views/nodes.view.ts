@@ -645,6 +645,7 @@ export class NodesView {
   private makeLabelConnectionText(
     groupEnter: d3.Selection<SVGElement, NodeViewObject, Element, undefined>,
   ) {
+    return;
     groupEnter
       .append(StaticDomTags.NODE_CONNECTIONTIME_TEXT_SVG)
       .attr("class", StaticDomTags.NODE_CONNECTIONTIME_TEXT_CLASS)
