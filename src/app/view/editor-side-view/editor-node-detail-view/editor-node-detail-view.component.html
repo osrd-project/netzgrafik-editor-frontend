@@ -29,6 +29,7 @@
     <sbb-form-field [label]="'app.view.editor-side-view.editor-node-detail-view.connection-time' | translate"
                     class="sbb-form-field-long"
                     [class.readonly]="!versionControlService.getVariantIsWritable()"
+                    *ngIf="false"
     >
       <input
         sbbInput
