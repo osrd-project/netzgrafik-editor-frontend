@@ -60,6 +60,10 @@
   font-family: "SBBWeb Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+::ng-deep .EditTrainrunSectionDialogHeaderNumberOfStopsInput {
+  visibility: hidden
+}
+
 ::ng-deep input.NumberOfStopsInputElement {
   background-color: var(--sbb-background-color);
   border: 0.1px solid var(--sbb-menu-item-label);

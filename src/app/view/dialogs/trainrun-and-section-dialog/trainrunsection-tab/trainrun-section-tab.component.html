@@ -7,15 +7,14 @@
             <td class="EditTrainrunSectionDialogHeaderLeft" rowspan="2">
               <b>{{ leftBetriebspunkt[0] }}</b> {{ leftBetriebspunkt[1] }}
             </td>
-            <td class="EditTrainrunSectionDialogHeaderSeparatorLeft" style="visibility: hidden;"></td>
+            <td class="EditTrainrunSectionDialogHeaderSeparatorLeft EditTrainrunSectionDialogHeaderNumberOfStopsInput"></td>
             <td
               [ngClass]="
                 tagNbrStopInput
-                  ? 'EditTrainrunSectionDialogHeaderCenter IsActive'
-                  : 'EditTrainrunSectionDialogHeaderCenter NotActive'
+                  ? 'EditTrainrunSectionDialogHeaderCenter EditTrainrunSectionDialogHeaderNumberOfStopsInput IsActive'
+                  : 'EditTrainrunSectionDialogHeaderCenter EditTrainrunSectionDialogHeaderNumberOfStopsInput NotActive'
               "
               rowspan="2"
-              style="visibility: hidden;"
             >
               <input
                 tabindex="-1"
@@ -55,7 +54,7 @@
                 type="button"
               />
             </td>
-            <td class="EditTrainrunSectionDialogHeaderSeparatorRight" style="visibility: hidden;"></td>
+            <td class="EditTrainrunSectionDialogHeaderSeparatorRight EditTrainrunSectionDialogHeaderNumberOfStopsInput"></td>
             <td class="EditTrainrunSectionDialogHeaderRight" rowspan="2">
               <b>{{ rightBetriebspunkt[0] }}</b> {{ rightBetriebspunkt[1] }}
             </td>
