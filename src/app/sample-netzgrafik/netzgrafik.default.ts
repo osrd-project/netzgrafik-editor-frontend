@@ -8,6 +8,29 @@ import {NetzgrafikDemoStandaloneGithub} from "./netzgrafik.demo.standalone.githu
 
 export class NetzgrafikDefault {
   static getDefaultNetzgrafik(): NetzgrafikDto {
+    return {
+      nodes: [],
+      trainrunSections: [],
+      trainruns: [],
+      resources: [],
+      metadata: {
+        analyticsSettings: {
+          originDestinationSettings: {
+            connectionPenalty: 5,
+          }
+        },
+        trainrunCategories: [],
+        trainrunFrequencies: [],
+        trainrunTimeCategories: [],
+        netzgrafikColors: [],
+      },
+      freeFloatingTexts: [],
+      labels: [],
+      labelGroups: [],
+      filterData: {
+        filterSettings: [],
+      },
+    };
     if (environment.standalonedemo) {
       return NetzgrafikDemoStandaloneGithub.getNetzgrafikDemoStandaloneGithub();
     }
