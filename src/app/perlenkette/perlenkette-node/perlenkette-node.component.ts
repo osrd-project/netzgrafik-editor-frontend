@@ -192,10 +192,7 @@ export class PerlenketteNodeComponent implements OnInit, AfterViewInit {
   }
 
   getTextNameOrTime(connection: PerlenketteConnection, pos: number) {
-    return pos === 0
-      ? connection.categoryShortName + "" + connection.title
-      : "" +
-          MathUtils.round(connection.remainingTime, this.filterService.getTimeDisplayPrecision());
+    return pos === 0 ? "" + connection.title : "" + connection.remainingTime;
   }
 
   transformIndex(index: number, connectionGrpKey: number): number {
@@ -327,7 +324,7 @@ export class PerlenketteNodeComponent implements OnInit, AfterViewInit {
     this.perlenketteTrainrun.pathItems.forEach((item: PerlenketteItem) => {
       if (item.isPerlenketteNode()) {
         item.getPerlenketteNode().connections.forEach((connection: PerlenketteConnection) => {
-          const name = connection.categoryShortName + "" + connection.title;
+          const name = "" + connection.title;
           maxTrainrunNameLen = Math.max(
             3 + connection.terminalStationBackward.length,
             Math.max(
