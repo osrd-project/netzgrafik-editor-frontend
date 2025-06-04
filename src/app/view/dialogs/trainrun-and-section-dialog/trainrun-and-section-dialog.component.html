@@ -16,9 +16,7 @@
     <div class="TrainrunTabGrupe">
       <sbb-tab-group [selectedIndex]="data.type">
         <sbb-tab
-          label="{{ selectedTrainrun.getCategoryShortName() }}{{
-            selectedTrainrun.getTitle()
-          }}"
+          label="{{ selectedTrainrun.getTitle() }}"
           id="trainrun-tab"
         >
           <sbb-trainrun-tab
