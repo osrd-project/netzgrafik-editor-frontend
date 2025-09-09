@@ -30,7 +30,7 @@ export class TrainrunSectionCardComponent implements AfterViewInit, OnDestroy {
   public categoryColorRef: ColorRefType;
   public timeCategoryLinePattern: LinePatternRefs;
   public direction = Direction;
-  public chosenCard: "top" | "bottom";
+  public chosenCard: "top" | "bottom" | null = null;
 
   private trainrunSectionHelper: TrainrunsectionHelper;
   private destroyed = new Subject<void>();
@@ -54,14 +54,6 @@ export class TrainrunSectionCardComponent implements AfterViewInit, OnDestroy {
     this.trainrunSectionService.trainrunSections.pipe(takeUntil(this.destroyed)).subscribe(() => {
       this.updateAllValues();
     });
-    // Initialize the selected trainrun as one-way, selecting the [source] → [target] card
-    if (this.selectedTrainrunSection.getTrainrun().isRoundTrip()) {
-      if (TrainrunsectionHelper.isTargetRightOrBottom(this.selectedTrainrunSection)) {
-        this.onTrainrunSectionCardClick("top");
-      } else {
-        this.onTrainrunSectionCardClick("bottom");
-      }
-    }
   }
 
   updateAllValues() {
@@ -87,7 +79,9 @@ export class TrainrunSectionCardComponent implements AfterViewInit, OnDestroy {
     );
     this.endNode = [endNode.getFullName(), endNode.getBetriebspunktName()];
 
-    if (!selectedTrainrun.isRoundTrip()) {
+    if (selectedTrainrun.isRoundTrip()) {
+      this.chosenCard = null;
+    } else {
       this.chosenCard = TrainrunsectionHelper.isTargetRightOrBottom(this.selectedTrainrunSection)
         ? "top"
         : "bottom";
