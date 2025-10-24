@@ -1805,6 +1805,7 @@ export class TrainrunSectionsView {
           this.getHiddenTagForTime(d, TrainrunSectionText.TrainrunSectionName),
           !this.editorView.isTemporaryDisableFilteringOfItemsInViewEnabled() &&
             !this.editorView.isFilterDirectionArrowsEnabled(),
+          !this.editorView.isFilterAsymmetryArrowsEnabled(),
         ),
       );
     });
