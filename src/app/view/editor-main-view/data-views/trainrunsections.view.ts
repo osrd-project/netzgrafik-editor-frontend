@@ -783,6 +783,7 @@ export class TrainrunSectionsView {
       case TrainrunSectionText.TrainrunSectionBackwardTravelTime: {
         const data = TrainrunSectionsView.getFormattedDisplayText(trainrunSection, textElement);
         if (data !== undefined) {
+          console.log("textElement", textElement, "data", data);
           return data;
         }
         return TrainrunSectionsView.extractTravelTime(
