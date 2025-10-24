@@ -85,7 +85,7 @@
               <path
                 [class]="getEdgeLineArrowClassAttrString()"
                 d="M0,5L0,-5L8,0Z"
-                [attr.transform]="getArrowTranslateAndRotate()"
+                [attr.transform]="getDirectionArrowTranslateAndRotate()"
               ></path>
             </svg>
           </div>
@@ -98,16 +98,29 @@
               <path
                 [class]="getEdgeLineArrowClassAttrString()"
                 d="M0,5L0,-5L8,0Z"
-                [attr.transform]="getArrowTranslateAndRotate()"
+                [attr.transform]="getDirectionArrowTranslateAndRotate()"
               ></path>
             </svg>
           </div>
 
-          <div class="NodeLeftArrival" *ngIf="isBottomTrainrunSectionInfoDisplayed"></div>
-          <div class="NodeLeftDeparture" *ngIf="isTopTrainrunSectionInfoDisplayed"></div>
-          <div class="NodeRightArrival" *ngIf="isTopTrainrunSectionInfoDisplayed"></div>
-          <div class="NodeRightDeparture" *ngIf="isBottomTrainrunSectionInfoDisplayed"></div>
-          <div class="TravelTime"></div>
+          <div
+            class="NodeLeftArrival"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          ></div>
+          <div
+            class="NodeLeftDeparture"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          ></div>
+          <div
+            class="NodeRightArrival"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          ></div>
+          <div
+            class="NodeRightDeparture"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          ></div>
+          <div [ngClass]="getTravelTimeScssClass() + 'TravelTime'"></div>
+          <div class="BottomTravelTime" *ngIf="!isSymmetric"></div>
 
           <div
             class="focusguard"
@@ -122,7 +135,10 @@
             (focus)="setFocusToBeginningOfLoop()"
           ></div>
 
-          <div class="NodeLeftArrivalMinus" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeLeftArrivalMinus"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -132,7 +148,10 @@
               -
             </button>
           </div>
-          <div class="NodeLeftArrivalTime" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeLeftArrivalTime"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <input
               tabindex="6"
               id="NodeLeftArrivalTimeInputElement"
@@ -146,8 +165,30 @@
               #leftArrivalTimeInputElement
             />
           </div>
-
-          <div class="NodeLeftArrivalPlus" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <sbb-toggle-switch-button
+            class="LeftSymmetryToggle"
+            *ngIf="selectedTrainrunSection.getTrainrun().isRoundTrip()"
+            [checked]="
+              !trainrunSectionHelper.isLeftNextStopNodeSymmetric(
+                selectedTrainrunSection,
+                trainrunSectionTimesService.getNodesOrdered()
+              )
+            "
+            (checkedChanged)="onLeftNodeSymmetryToggleChanged(!$event)"
+            [disabled]="
+              trainrunSectionHelper.isLeftToggleDisabled(
+                selectedTrainrunSection,
+                trainrunSectionTimesService.getLockStructure(),
+                trainrunSectionTimesService.getNodesOrdered()
+              )
+            "
+            #leftSymmetryToggle
+          >
+          </sbb-toggle-switch-button>
+          <div
+            class="NodeLeftArrivalPlus"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -158,7 +199,10 @@
             </button>
           </div>
 
-          <div class="NodeLeftDepartureMinus" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeLeftDepartureMinus"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -168,7 +212,10 @@
               -
             </button>
           </div>
-          <div class="NodeLeftDepartureTime" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeLeftDepartureTime"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <input
               tabindex="2"
               id="NodeLeftDepartureTimeInputElement"
@@ -182,7 +229,10 @@
               #leftDepartureTimeInputElement
             />
           </div>
-          <div class="NodeLeftDeparturePlus" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeLeftDeparturePlus"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -192,8 +242,30 @@
               +
             </button>
           </div>
-
-          <div class="NodeRightArrivalMinus" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <sbb-toggle-switch-button
+            class="RightSymmetryToggle"
+            *ngIf="selectedTrainrunSection.getTrainrun().isRoundTrip()"
+            [checked]="
+              !trainrunSectionHelper.isRightNextStopNodeSymmetric(
+                selectedTrainrunSection,
+                trainrunSectionTimesService.getNodesOrdered()
+              )
+            "
+            (checkedChanged)="onRightNodeSymmetryToggleChanged(!$event)"
+            [disabled]="
+              trainrunSectionHelper.isRightToggleDisabled(
+                selectedTrainrunSection,
+                trainrunSectionTimesService.getLockStructure(),
+                trainrunSectionTimesService.getNodesOrdered()
+              )
+            "
+            #rightSymmetryToggle
+          >
+          </sbb-toggle-switch-button>
+          <div
+            class="NodeRightArrivalMinus"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -203,7 +275,10 @@
               -
             </button>
           </div>
-          <div class="NodeRightArrivalTime" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeRightArrivalTime"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <input
               tabindex="4"
               id="NodeRightArrivalTimeInputElement"
@@ -217,7 +292,10 @@
               #rightArrivalTimeInputElement
             />
           </div>
-          <div class="NodeRightArrivalPlus" *ngIf="isTopTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeRightArrivalPlus"
+            *ngIf="TrainrunsectionHelper.isRightSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -228,7 +306,10 @@
             </button>
           </div>
 
-          <div class="NodeRightDepartureMinus" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeRightDepartureMinus"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -238,7 +319,10 @@
               -
             </button>
           </div>
-          <div class="NodeRightDepartureTime" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeRightDepartureTime"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <input
               tabindex="5"
               id="NodeRightDepartureTimeInputElement"
@@ -252,7 +336,10 @@
               #rightDepartureTimeInputElement
             />
           </div>
-          <div class="NodeRightDeparturePlus" *ngIf="isBottomTrainrunSectionInfoDisplayed">
+          <div
+            class="NodeRightDeparturePlus"
+            *ngIf="TrainrunsectionHelper.isLeftSideDisplayed(selectedTrainrunSection)"
+          >
             <button
               tabindex="-1"
               mode="ghost"
@@ -263,17 +350,17 @@
             </button>
           </div>
 
-          <div class="TravelTimeMinus">
+          <div [ngClass]="getTravelTimeScssClass() + 'TravelTimeMinus'">
             <button
               tabindex="-1"
               mode="ghost"
               class="ButtonMinus"
-              (click)="trainrunSectionTimesService.onInputTravelTimeElementButtonMinus()"
+              (click)="trainrunSectionTimesService.onTravelTimeButtonMinus()"
             >
               -
             </button>
           </div>
-          <div class="TravelTimeTime">
+          <div [ngClass]="getTravelTimeScssClass() + 'TravelTimeTime'">
             <ng-container>
               <input
                 tabindex="3"
@@ -291,23 +378,67 @@
                 pattern="^[0-9.]*"
                 minlength="1"
                 [(ngModel)]="trainrunSectionTimesService.getTimeStructure().travelTime"
-                (change)="trainrunSectionTimesService.onInputTravelTimeChanged()"
+                (change)="trainrunSectionTimesService.onTravelTimeChanged()"
                 #travelTimeInputElement
               />
             </ng-container>
           </div>
-          <div class="TravelTimePlus">
+          <div [ngClass]="getTravelTimeScssClass() + 'TravelTimePlus'">
             <button
               tabindex="-1"
               mode="ghost"
               class="ButtonPlus"
-              (click)="trainrunSectionTimesService.onInputTravelTimeElementButtonPlus()"
+              (click)="trainrunSectionTimesService.onTravelTimeButtonPlus()"
             >
               +
             </button>
           </div>
 
-          <div class="TravelTimeLock">
+          <div class="BottomTravelTimeMinus" *ngIf="!isSymmetric">
+            <button
+              tabindex="-1"
+              mode="ghost"
+              class="ButtonMinus"
+              (click)="trainrunSectionTimesService.onBottomTravelTimeButtonMinus()"
+            >
+              -
+            </button>
+          </div>
+          <div class="BottomTravelTimeTime" *ngIf="!isSymmetric">
+            <ng-container>
+              <input
+                tabindex="3"
+                id="BottomTravelTimeTimeInputElement"
+                [ngClass]="{
+                  InputBottomTravelTimeElement:
+                    !trainrunSectionTimesService.getHighlightBottomTravelTimeElement(),
+                  InputBottomTravelTimeElementHighlighted:
+                    trainrunSectionTimesService.getHighlightBottomTravelTimeElement(),
+                }"
+                type="number"
+                min="0.0001"
+                sbbInput
+                spellcheck="false"
+                pattern="^[0-9.]*"
+                minlength="1"
+                [(ngModel)]="trainrunSectionTimesService.getTimeStructure().bottomTravelTime"
+                (change)="trainrunSectionTimesService.onBottomTravelTimeChanged()"
+                #bottomTravelTimeInputElement
+              />
+            </ng-container>
+          </div>
+          <div class="BottomTravelTimePlus" *ngIf="!isSymmetric">
+            <button
+              tabindex="-1"
+              mode="ghost"
+              class="ButtonPlus"
+              (click)="trainrunSectionTimesService.onBottomTravelTimeButtonPlus()"
+            >
+              +
+            </button>
+          </div>
+
+          <div [ngClass]="getTravelTimeScssClass() + 'TravelTimeLock'">
             <div *ngIf="trainrunSectionTimesService.getLockStructure().travelTimeLock === false">
               <sbb-icon
                 svgIcon="lock-open-medium"
