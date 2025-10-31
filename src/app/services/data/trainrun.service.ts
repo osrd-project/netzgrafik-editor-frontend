@@ -271,6 +271,10 @@ export class TrainrunService {
       this.trainrunSectionService
         .getAllTrainrunSectionsForTrainrun(trainrun.getId())
         .forEach((ts: TrainrunSection) => ts.resetSymmetry());
+    } else {
+      this.trainrunSectionService
+        .getAllTrainrunSectionsForTrainrun(trainrun.getId())
+        .forEach((ts: TrainrunSection) => ts.setAsymmetry());
     }
     this.trainrunsUpdated();
     this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
