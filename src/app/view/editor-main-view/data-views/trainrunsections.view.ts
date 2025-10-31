@@ -1165,6 +1165,7 @@ export class TrainrunSectionsView {
     connectedTrainIds: any,
     enableEvents = true,
   ) {
+    return;
     (["BEGINNING_ARROW", "ENDING_ARROW"] as const).forEach((arrowType) => {
       groupLinesEnter
         .append(StaticDomTags.EDGE_LINE_ARROW_SVG)

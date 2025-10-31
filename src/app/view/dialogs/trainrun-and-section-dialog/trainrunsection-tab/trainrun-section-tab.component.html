@@ -167,7 +167,7 @@
           </div>
           <sbb-toggle-switch-button
             class="LeftSymmetryToggle"
-            *ngIf="selectedTrainrunSection.getTrainrun().isRoundTrip()"
+            *ngIf="false && selectedTrainrunSection.getTrainrun().isRoundTrip()"
             [checked]="
               !trainrunSectionHelper.isLeftNextStopNodeSymmetric(
                 selectedTrainrunSection,
@@ -244,7 +244,7 @@
           </div>
           <sbb-toggle-switch-button
             class="RightSymmetryToggle"
-            *ngIf="selectedTrainrunSection.getTrainrun().isRoundTrip()"
+            *ngIf="false && selectedTrainrunSection.getTrainrun().isRoundTrip()"
             [checked]="
               !trainrunSectionHelper.isRightNextStopNodeSymmetric(
                 selectedTrainrunSection,
