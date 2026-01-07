@@ -27,14 +27,14 @@
       ></path>
       <!-- Asymmetry arrows (asymmetric trainrun)-->
       <path
-        *ngIf="false && shouldDisplayAsymmetryArrows('top')"
+        *ngIf="shouldDisplayAsymmetryArrows('top')"
         [class]="getEdgeLineArrowClass()"
         d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
         [attr.transform]="getAsymmetryArrowTranslate(24)"
         [attr.hidden]="!filterService.isFilterAsymmetryArrowsEnabled() ? '' : null"
       ></path>
       <path
-        *ngIf="false && shouldDisplayAsymmetryArrows('bottom')"
+        *ngIf="shouldDisplayAsymmetryArrows('bottom')"
         [class]="getEdgeLineArrowClass()"
         d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
         [attr.transform]="getAsymmetryArrowTranslate(169)"
@@ -294,14 +294,14 @@
           ></path>
           <!-- Asymmetry arrows (asymmetric trainrun)-->
           <path
-            *ngIf="false && shouldDisplayAsymmetryArrows('top')"
+            *ngIf="shouldDisplayAsymmetryArrows('top')"
             [class]="getEdgeLineArrowClass()"
             d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
             [attr.transform]="getAsymmetryArrowTranslate(24)"
             [attr.hidden]="!filterService.isFilterAsymmetryArrowsEnabled() ? '' : null"
           ></path>
           <path
-            *ngIf="false && shouldDisplayAsymmetryArrows('bottom')"
+            *ngIf="shouldDisplayAsymmetryArrows('bottom')"
             [class]="getEdgeLineArrowClass()"
             d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
             [attr.transform]="getAsymmetryArrowTranslate(169)"
@@ -447,7 +447,7 @@
 
             <sbb-toggle-switch-button
               class="LeftSymmetryToggle"
-              *ngIf="false && trainrunSection.getTrainrun().isRoundTrip()"
+              *ngIf="trainrunSection.getTrainrun().isRoundTrip()"
               [checked]="!TrainrunsectionHelper.isLeftNodeSymmetric(trainrunSection)"
               (checkedChanged)="onLeftNodeSymmetryToggleChanged(!$event)"
               [disabled]="
@@ -728,7 +728,7 @@
             </div>
             <sbb-toggle-switch-button
               class="RightSymmetryToggle"
-              *ngIf="false && trainrunSection.getTrainrun().isRoundTrip()"
+              *ngIf="trainrunSection.getTrainrun().isRoundTrip()"
               [checked]="!TrainrunsectionHelper.isRightNodeSymmetric(trainrunSection)"
               (checkedChanged)="onRightNodeSymmetryToggleChanged(!$event)"
               [disabled]="
@@ -826,14 +826,14 @@
           ></path>
           <!-- Asymmetry arrows (asymmetric trainrun)-->
           <path
-            *ngIf="false && shouldDisplayAsymmetryArrows('top')"
+            *ngIf="shouldDisplayAsymmetryArrows('top')"
             [class]="getEdgeLineArrowClass()"
             d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
             [attr.transform]="getAsymmetryArrowTranslate(24)"
             [attr.hidden]="!filterService.isFilterAsymmetryArrowsEnabled() ? '' : null"
           ></path>
           <path
-            *ngIf="false && shouldDisplayAsymmetryArrows('bottom')"
+            *ngIf="shouldDisplayAsymmetryArrows('bottom')"
             [class]="getEdgeLineArrowClass()"
             d="M-1,-6 V0 H-8 L1,6 V0 H8 Z"
             [attr.transform]="getAsymmetryArrowTranslate(169)"

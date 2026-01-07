@@ -155,7 +155,7 @@
       </div>
 
       <sbb-toggle-switch-button
-        *ngIf="false && !isSymmetric()"
+        *ngIf="!isSymmetric()"
         [checked]="!isSymmetric()"
         (checkedChanged)="onTrainrunSymmetryToggleChanged()"
         #trainrunSymmetryToggle

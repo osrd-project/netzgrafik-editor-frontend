@@ -55,8 +55,8 @@ export class TrainrunSection {
       sourcePortId,
       targetNodeId,
       targetPortId,
-      sourceSymmetry = false, // temporary, to allow migration of old trainrunSections from file
-      targetSymmetry = false, // temporary, to allow migration of old trainrunSections from file
+      sourceSymmetry = true, // temporary, to allow migration of old trainrunSections from file
+      targetSymmetry = true, // temporary, to allow migration of old trainrunSections from file
       sourceDeparture,
       sourceArrival,
       targetDeparture,
@@ -75,8 +75,8 @@ export class TrainrunSection {
       sourcePortId: 0,
       targetNodeId: 0,
       targetPortId: 0,
-      sourceSymmetry: false,
-      targetSymmetry: false,
+      sourceSymmetry: true,
+      targetSymmetry: true,
       sourceDeparture: {
         time: 0,
         consecutiveTime: 0,
