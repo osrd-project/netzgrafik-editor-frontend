@@ -1176,6 +1176,7 @@ export class TrainrunSectionsView {
   ) {
     (["BEGINNING_ARROW", "ENDING_ARROW"] as const).forEach((arrowType) => {
       groupLinesEnter
+        .filter((d: TrainrunSectionViewObject) => d.trainrunSection.getTrainrun().isRoundTrip())
         .append(StaticDomTags.EDGE_LINE_ARROW_SVG)
         .attr(StaticDomTags.TAG_HIDDEN, (d: TrainrunSectionViewObject) =>
           // Hide arrow
