@@ -36,7 +36,7 @@ import {
   NodeOperation,
   Operation,
   OperationType,
-  TrainrunOperation,
+  TrainrunUpdateOperation,
 } from "../../models/operation.model";
 
 @Injectable({
@@ -591,7 +591,7 @@ export class NodeService implements OnDestroy {
     this.transitionsUpdated();
     this.nodesUpdated();
     this.operation.emit(
-      new TrainrunOperation(OperationType.update, trainrunSections.trainrunSection1.getTrainrun()),
+      new TrainrunUpdateOperation(trainrunSections.trainrunSection1.getTrainrun()),
     );
   }
 
