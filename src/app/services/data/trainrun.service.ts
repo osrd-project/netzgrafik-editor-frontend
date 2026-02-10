@@ -540,7 +540,7 @@ export class TrainrunService {
       this.nodeService.transitionsUpdated();
       this.trainrunsUpdated();
     }
-    this.operation.emit(new TrainrunCreateOperation(copiedtrainrun));
+    this.operation.emit(new TrainrunCreateOperation(copiedtrainrun, trainrunId));
     return copiedtrainrun;
   }
 
