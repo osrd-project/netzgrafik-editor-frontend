@@ -43,13 +43,31 @@ abstract class BaseOperation<O extends OperationObjectType> {
   }
 }
 
-class TrainrunOperation extends BaseOperation<OperationObjectType.trainrun> {
+abstract class TrainrunOperation extends BaseOperation<OperationObjectType.trainrun> {
   readonly trainrun: TrainrunDto;
 
   /** @internal */
   constructor(operationType: OperationType, trainrun: Trainrun) {
     super(operationType, OperationObjectType.trainrun);
     this.trainrun = trainrun.getDto();
+  }
+}
+
+class TrainrunUpdateOperation extends TrainrunOperation {
+  constructor(trainrun: Trainrun) {
+    super(OperationType.update, trainrun);
+  }
+}
+
+class TrainrunCreateOperation extends TrainrunOperation {
+  constructor(trainrun: Trainrun) {
+    super(OperationType.create, trainrun);
+  }
+}
+
+class TrainrunDeleteOperation extends TrainrunOperation {
+  constructor(trainrun: Trainrun) {
+    super(OperationType.delete, trainrun);
   }
 }
 
@@ -114,7 +132,9 @@ type Operation =
 export {
   OperationType,
   Operation,
-  TrainrunOperation,
+  TrainrunUpdateOperation,
+  TrainrunCreateOperation,
+  TrainrunDeleteOperation,
   NodeOperation,
   LabelOperation,
   NoteOperation,
