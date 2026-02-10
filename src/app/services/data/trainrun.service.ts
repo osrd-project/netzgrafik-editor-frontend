@@ -32,7 +32,13 @@ import {FilterService} from "../ui/filter.service";
 import {Transition} from "../../models/transition.model";
 import {Port} from "../../models/port.model";
 import {Connection} from "../../models/connection.model";
-import {Operation, OperationType, TrainrunOperation} from "../../models/operation.model";
+import {
+  Operation,
+  OperationType,
+  TrainrunCreateOperation,
+  TrainrunDeleteOperation,
+  TrainrunUpdateOperation,
+} from "../../models/operation.model";
 import {TrainrunsectionHelper} from "../util/trainrunsection.helper";
 
 @Injectable({
@@ -161,7 +167,7 @@ export class TrainrunService {
     if (enforceUpdate) {
       this.trainrunsUpdated();
     }
-    this.operation.emit(new TrainrunOperation(OperationType.delete, trainrun));
+    this.operation.emit(new TrainrunDeleteOperation(trainrun));
   }
 
   getSelectedTrainrun(): Trainrun {
@@ -234,7 +240,7 @@ export class TrainrunService {
     this.propagateTrainrunInitialConsecutiveTimes(trainrun);
     this.nodeService.initPortOrdering();
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+    this.operation.emit(new TrainrunUpdateOperation(trainrun));
     return freqOffset;
   }
 
@@ -247,7 +253,7 @@ export class TrainrunService {
     this.nodeService.reorderPortsOnNodesForTrainrun(trainrun);
     this.nodeService.initPortOrdering();
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+    this.operation.emit(new TrainrunUpdateOperation(trainrun));
   }
 
   updateTrainrunTimeCategory(trainrun: Trainrun, timeCategory: TrainrunTimeCategory) {
@@ -260,7 +266,7 @@ export class TrainrunService {
     this.nodeService.reorderPortsOnNodesForTrainrun(trainrun);
     this.nodeService.initPortOrdering();
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+    this.operation.emit(new TrainrunUpdateOperation(trainrun));
   }
 
   updateTrainrunTitle(trainrun: Trainrun, title: string) {
@@ -268,14 +274,14 @@ export class TrainrunService {
     this.nodeService.reorderPortsOnNodesForTrainrun(trainrun);
     this.nodeService.initPortOrdering();
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+    this.operation.emit(new TrainrunUpdateOperation(trainrun));
   }
 
   updateDirection(trainrun: Trainrun, direction: Direction) {
     const trainrunSection = this.getTrainrunFromId(trainrun.getId());
     trainrunSection.setDirection(direction);
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+    this.operation.emit(new TrainrunUpdateOperation(trainrun));
   }
 
   getTrainruns(): Trainrun[] {
@@ -389,7 +395,7 @@ export class TrainrunService {
     newTrainrun.select();
     this.nodeService.transitionsUpdated();
     this.trainrunsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.create, newTrainrun));
+    this.operation.emit(new TrainrunCreateOperation(newTrainrun));
   }
 
   combineTwoTrainruns(node: Node, port1: Port, port2: Port) {
@@ -537,7 +543,7 @@ export class TrainrunService {
       this.nodeService.transitionsUpdated();
       this.trainrunsUpdated();
     }
-    this.operation.emit(new TrainrunOperation(OperationType.create, copiedtrainrun));
+    this.operation.emit(new TrainrunCreateOperation(copiedtrainrun));
     return copiedtrainrun;
   }
 
@@ -557,7 +563,7 @@ export class TrainrunService {
     trainrun.setLabelIds(labelIds);
     this.trainrunsUpdated();
     if (uniqueLabels.length === labels.length) {
-      this.operation.emit(new TrainrunOperation(OperationType.update, trainrun));
+      this.operation.emit(new TrainrunUpdateOperation(trainrun));
     }
   }
 

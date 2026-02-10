@@ -36,7 +36,7 @@ import {
   NodeOperation,
   Operation,
   OperationType,
-  TrainrunOperation,
+  TrainrunUpdateOperation,
 } from "../../models/operation.model";
 
 @Injectable({providedIn: "root"})
@@ -609,7 +609,7 @@ export class NodeService implements OnDestroy {
     this.transitionsUpdated();
     this.nodesUpdated();
     this.operation.emit(
-      new TrainrunOperation(OperationType.update, trainrunSections.trainrunSection1.getTrainrun()),
+      new TrainrunUpdateOperation(trainrunSections.trainrunSection1.getTrainrun()),
     );
   }
 
@@ -1267,7 +1267,7 @@ export class NodeService implements OnDestroy {
         if (!this.trainrunSectionService.getAllTrainrunSectionsForTrainrun(t.getId()).length) {
           return;
         }
-        this.operation.emit(new TrainrunOperation(OperationType.update, t));
+        this.operation.emit(new TrainrunUpdateOperation(t));
       });
     }
     this.resourceService.deleteResource(node.getResourceId(), enforceUpdate);
