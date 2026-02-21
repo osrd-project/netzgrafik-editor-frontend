@@ -186,9 +186,11 @@ export class TrainrunSectionCardComponent implements OnInit, AfterViewInit, OnDe
       trainrunSection = this.trainrunService.getLeftOrTopExtremitySection();
     }
 
+    let oneWayDirection: "forward" | "backward" = "forward";
     if (this.leftNode === this.rightNode) {
       // Cyclic trainrun
       // This ensures the two cards represent different directions
+      oneWayDirection = "backward";
       this.trainrunSectionService.invertTrainrunSectionsSourceAndTarget(
         trainrunSection.getTrainrunId(),
       );
@@ -196,6 +198,7 @@ export class TrainrunSectionCardComponent implements OnInit, AfterViewInit, OnDe
       // Non-cyclic trainrun
       const referenceNode = position === "top" ? this.leftNode : this.rightNode;
       if (referenceNode !== trainrunSection.getSourceNode()) {
+        oneWayDirection = "backward";
         this.trainrunSectionService.invertTrainrunSectionsSourceAndTarget(
           trainrunSection.getTrainrunId(),
         );
@@ -203,7 +206,7 @@ export class TrainrunSectionCardComponent implements OnInit, AfterViewInit, OnDe
     }
 
     this.chosenCard = position;
-    this.trainrunService.updateDirection(selectedTrainrun, Direction.ONE_WAY);
+    this.trainrunService.updateDirection(selectedTrainrun, Direction.ONE_WAY, oneWayDirection);
   }
 
   getTrainrunTimeStructure(): Omit<
