@@ -609,7 +609,7 @@ export class NodeService implements OnDestroy {
     this.transitionsUpdated();
     this.nodesUpdated();
     this.operation.emit(
-      new TrainrunUpdateOperation(trainrunSections.trainrunSection1.getTrainrun()),
+      new TrainrunUpdateOperation(trainrunSections.trainrunSection1.getTrainrun(), ["times"]),
     );
   }
 
@@ -1267,7 +1267,7 @@ export class NodeService implements OnDestroy {
         if (!this.trainrunSectionService.getAllTrainrunSectionsForTrainrun(t.getId()).length) {
           return;
         }
-        this.operation.emit(new TrainrunUpdateOperation(t));
+        this.operation.emit(new TrainrunUpdateOperation(t, ["nodes", "times"]));
       });
     }
     this.resourceService.deleteResource(node.getResourceId(), enforceUpdate);

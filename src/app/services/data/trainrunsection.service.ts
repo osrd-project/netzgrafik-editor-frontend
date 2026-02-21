@@ -386,7 +386,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.iterateAlongTrainrunUntilEndAndPropagateTime(fromNode, fromTrainrunSectionId);
     this.trainrunSectionsUpdated();
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   propagateTrainrunSectionTime(
@@ -605,7 +605,13 @@ export class TrainrunSectionService implements OnDestroy {
     if (initialTrainrunsLength !== this.trainrunService.trainrunsStore.trainruns.length) {
       this.operation.emit(new TrainrunCreateOperation(trainrunSection.getTrainrun()));
     } else {
-      this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "times",
+          "numberOfStops",
+        ]),
+      );
     }
 
     return trainrunSection;
@@ -683,7 +689,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.trainrunSectionsUpdated();
     }
     if (emit) {
-      this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "numberOfStops",
+          "times",
+        ]),
+      );
     }
   }
 
@@ -769,7 +781,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.trainrunSectionsUpdated();
     }
     if (this.getAllTrainrunSectionsForTrainrun(trainrun.getId()).length && emit) {
-      this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "numberOfStops",
+          "times",
+        ]),
+      );
     }
   }
 
@@ -813,7 +831,9 @@ export class TrainrunSectionService implements OnDestroy {
     timeStructure: LeftAndRightTimeStructure,
   ) {
     this.updateTrainrunSectionLeftAndRightTimes(section, timeStructure);
-    this.operation.emit(new TrainrunUpdateOperation(section.trainrunSection.getTrainrun()));
+    this.operation.emit(
+      new TrainrunUpdateOperation(section.trainrunSection.getTrainrun(), ["times"]),
+    );
   }
 
   setTimeStructureToTrainrunSections(
@@ -888,7 +908,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.trainrunSectionsUpdated();
     this.nodeService.connectionsUpdated();
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   private setTimeStructureInDirection({
@@ -1115,7 +1135,7 @@ export class TrainrunSectionService implements OnDestroy {
     );
 
     this.replaceIntermediateStopWithNode(trainrunSection.getId(), newNode.getId(), true);
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   removeIntermediateStopOnTrainrunSection(initialTrainrunSection: TrainrunSection): boolean {
