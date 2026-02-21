@@ -321,7 +321,9 @@ export class TrainrunSectionService implements OnDestroy {
     const trainrunSection = this.getTrainrunSectionFromId(trs.getId());
     trainrunSection.setNumberOfStops(numberOfStops);
     this.trainrunSectionsUpdated();
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(
+      new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["numberOfStops"]),
+    );
   }
 
   updateTrainrunSectionTime(
@@ -407,7 +409,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.iterateAlongTrainrunUntilEndAndPropagateTime(fromNode, fromTrainrunSectionId);
     this.trainrunSectionsUpdated();
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   propagateTrainrunSectionTime(
@@ -641,7 +643,13 @@ export class TrainrunSectionService implements OnDestroy {
     if (initialTrainrunsLength !== this.trainrunService.trainrunsStore.trainruns.length) {
       this.operation.emit(new TrainrunCreateOperation(trainrunSection.getTrainrun()));
     } else {
-      this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "times",
+          "numberOfStops",
+        ]),
+      );
     }
 
     return trainrunSection;
@@ -720,7 +728,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.nodeService.transitionsUpdated();
       this.trainrunSectionsUpdated();
     }
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(
+      new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+        "nodes",
+        "numberOfStops",
+        "times",
+      ]),
+    );
   }
 
   deleteListOfTrainrunSections(trainrunSections: TrainrunSection[], enforceUpdate = true) {
@@ -793,7 +807,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.trainrunSectionsUpdated();
     }
     if (this.getTrainrunSections().length) {
-      this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "numberOfStops",
+          "times",
+        ]),
+      );
     }
   }
 
@@ -837,7 +857,9 @@ export class TrainrunSectionService implements OnDestroy {
     timeStructure: LeftAndRightTimeStructure,
   ) {
     this.updateTrainrunSectionLeftAndRightTimes(section, timeStructure);
-    this.operation.emit(new TrainrunUpdateOperation(section.trainrunSection.getTrainrun()));
+    this.operation.emit(
+      new TrainrunUpdateOperation(section.trainrunSection.getTrainrun(), ["times"]),
+    );
   }
 
   setTimeStructureToTrainrunSections(
@@ -903,7 +925,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.trainrunSectionsUpdated();
     this.nodeService.connectionsUpdated();
-    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   private setTimeStructureInDirection({
