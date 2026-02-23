@@ -1114,6 +1114,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.nodeService.transitionsUpdated();
       this.nodeService.connectionsUpdated();
       this.trainrunSectionsUpdated();
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection1.getTrainrun(), [
+          "nodes",
+          "times",
+          "numberOfStops",
+        ]),
+      );
     }
     return {
       existingTrainrunSection: trainrunSection1,
