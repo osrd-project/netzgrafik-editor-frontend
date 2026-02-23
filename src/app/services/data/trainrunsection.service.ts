@@ -1103,6 +1103,13 @@ export class TrainrunSectionService implements OnDestroy {
     this.nodeService.connectionsUpdated();
     this.nodeService.nodesUpdated();
     this.trainrunSectionsUpdated();
+    this.operation.emit(
+      new TrainrunUpdateOperation(trainrunSection1.getTrainrun(), [
+        "nodes",
+        "times",
+        "numberOfStops",
+      ]),
+    );
   }
 
   setWarningOnNode(

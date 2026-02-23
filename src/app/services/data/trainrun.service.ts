@@ -316,6 +316,7 @@ export class TrainrunService {
       if (this.filterService.filterTrainrun(t)) {
         this.filterService.clearDeletetFilterTrainrunLabel(labelObject.getId());
         t.setLabelIds(t.getLabelIds().filter((labelId: number) => labelId !== labelObject.getId()));
+        this.operation.emit(new TrainrunUpdateOperation(t, ["labelIds"]));
       }
     });
 
@@ -399,6 +400,9 @@ export class TrainrunService {
     this.nodeService.transitionsUpdated();
     this.trainrunsUpdated();
     this.operation.emit(new TrainrunCreateOperation(newTrainrun));
+    this.operation.emit(
+      new TrainrunUpdateOperation(trainrun2split, ["nodes", "times", "numberOfStops"]),
+    );
   }
 
   combineTwoTrainruns(node: Node, port1: Port, port2: Port) {
@@ -511,6 +515,9 @@ export class TrainrunService {
 
     // update
     this.trainrunsUpdated();
+    this.operation.emit(
+      new TrainrunUpdateOperation(trainrun1, ["nodes", "times", "numberOfStops"]),
+    );
     this.nodeService.nodesUpdated();
     this.nodeService.connectionsUpdated();
     this.nodeService.transitionsUpdated();
