@@ -28,7 +28,7 @@ export class TrainrunSectionCardComponent implements OnInit, AfterViewInit, OnDe
   public frequencyLinePattern: LinePatternRefs;
   public categoryColorRef: ColorRefType;
   public timeCategoryLinePattern: LinePatternRefs;
-  public chosenCard: "top" | "bottom";
+  public chosenCard: "top" | "bottom" | null = null;
 
   private destroyed = new Subject<void>();
 
@@ -71,8 +71,8 @@ export class TrainrunSectionCardComponent implements OnInit, AfterViewInit, OnDe
 
     this.trainrunSectionTimesService.setOffset(0);
     if (selectedTrainrun.isRoundTrip()) {
-      // Initialize round trip trainrun with top card
-      this.onTrainrunSectionCardClick("top");
+      // // Initialize round trip trainrun with top card -> auto selection disabled in osrd
+      // this.onTrainrunSectionCardClick("top");
     } else {
       this.chosenCard = this.trainrunService.isTrainrunTargetRightOrBottom() ? "top" : "bottom";
     }
