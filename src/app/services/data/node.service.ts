@@ -55,7 +55,7 @@ export class NodeService implements OnDestroy {
 
   private dataService: DataService = null;
   private destroyed = new Subject<void>();
-  private currentOrderingAlgorithm: OrderingAlgorithm = OrderingAlgorithm.Alphabetical;
+  private currentOrderingAlgorithm: OrderingAlgorithm = OrderingAlgorithm.CrossingAware;
 
   constructor(
     private resourceService: ResourceService,
