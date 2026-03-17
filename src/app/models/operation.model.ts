@@ -32,12 +32,51 @@ abstract class Operation {
   }
 }
 
-class TrainrunOperation extends Operation {
+abstract class TrainrunOperation extends Operation {
   readonly trainrun: TrainrunDto;
 
   constructor(operationType: OperationType, trainrun: Trainrun) {
     super(operationType, OperationObjectType.trainrun);
     this.trainrun = trainrun.getDto();
+  }
+}
+
+type TrainrunUpdateTag =
+  | "nodes"
+  | "times"
+  | "numberOfStops"
+  | "name"
+  | "categoryId"
+  | "frequencyId"
+  | "timeCategoryId"
+  | "labelIds"
+  | "direction";
+
+class TrainrunUpdateOperation extends TrainrunOperation {
+  readonly tags: TrainrunUpdateTag[];
+  readonly oneWayDirection?: "forward" | "backward";
+  constructor(
+    trainrun: Trainrun,
+    tags: TrainrunUpdateTag[],
+    oneWayDirection?: "forward" | "backward",
+  ) {
+    super(OperationType.update, trainrun);
+    this.tags = tags;
+    this.oneWayDirection = oneWayDirection;
+  }
+}
+
+class TrainrunCreateOperation extends TrainrunOperation {
+  readonly duplicatedTrainrunId?: number;
+  constructor(trainrun: Trainrun, duplicatedTrainrunId?: number) {
+    super(OperationType.create, trainrun);
+    this.duplicatedTrainrunId = duplicatedTrainrunId;
+  }
+}
+
+class TrainrunDeleteOperation extends TrainrunOperation {
+  constructor(trainrun: Trainrun) {
+    super(OperationType.delete, trainrun);
   }
 }
 
@@ -68,4 +107,13 @@ class NoteOperation extends Operation {
   }
 }
 
-export {OperationType, Operation, TrainrunOperation, NodeOperation, LabelOperation, NoteOperation};
+export {
+  OperationType,
+  Operation,
+  TrainrunUpdateOperation,
+  TrainrunCreateOperation,
+  TrainrunDeleteOperation,
+  NodeOperation,
+  LabelOperation,
+  NoteOperation,
+};
