@@ -317,7 +317,7 @@ export class SVGMouseController {
 
     // We can't use d3.event.ctrlKey because it'll be set to true during
     // pinch-to-zoom touchpad gestures. Use keydown/keyup event listeners instead.
-    if (!this.ctrlKeyPressed) {
+    if (true) {
       // mouse wheel
       if (d3.event.deltaY > 0) {
         this.zoomOut(zoomCenter);
