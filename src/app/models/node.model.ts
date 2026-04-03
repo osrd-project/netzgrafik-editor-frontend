@@ -25,7 +25,7 @@ import {VisAVisPortPlacement} from "../services/util/node.port.placement";
 import {DataMigration} from "../utils/data-migration";
 
 export class Node {
-  private static currentId = 0;
+  static currentId = 0;
   private id: number;
   private betriebspunktName: string;
   private fullName: string;
@@ -773,7 +773,17 @@ export class Node {
   }
 
   isEmpty(): boolean {
-    return this.getBetriebspunktName() === "" && this.getFullName() === "";
+    return (
+      (this.getBetriebspunktName() === "" || this.isDefaultBetriebspunktName()) &&
+      this.getFullName() === ""
+    );
+  }
+
+  isDefaultBetriebspunktName(): boolean {
+    return (
+      this.getBetriebspunktName().substring(0, 2) === "id" &&
+      !isNaN(Number(this.getBetriebspunktName().substring(2)))
+    );
   }
 
   isNonStop(trainrunSection: TrainrunSection): boolean {
