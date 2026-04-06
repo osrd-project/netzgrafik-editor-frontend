@@ -497,7 +497,7 @@ export class EditorKeyEvents {
     if (this.isMultiNodeMovingMode()) {
       return false;
     }
-    const hoveredNodeId = this.getHoveredNodeId();
+    const hoveredNodeId: number | undefined = undefined; // disable node duplication since this makes Node.id and Node.betriebspunktName collide
     if (hoveredNodeId !== undefined) {
       const node = this.nodeService.getNodeFromId(hoveredNodeId);
       this.duplicateNode(node, node.getNodeWidth(), node.getNodeHeight());
