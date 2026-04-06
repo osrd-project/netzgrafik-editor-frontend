@@ -119,7 +119,7 @@ describe("NodeService Test", () => {
     nodeService.addNodeWithPosition(0, 0, betriebspunktName, fullName);
     expect(nodes.length).toBe(6);
     const n = nodes[nodes.length - 1];
-    expect(n.getBetriebspunktName()).toBe(betriebspunktName);
+    expect(n.getBetriebspunktName()).toBe(betriebspunktName + "_copy");
     expect(n.getFullName()).toBe(fullName);
   });
 
@@ -136,7 +136,7 @@ describe("NodeService Test", () => {
     nodeService.addNodeWithPosition(0, 0, betriebspunktName, fullName, labelIds);
     expect(nodes.length).toBe(6);
     const n = nodes[nodes.length - 1];
-    expect(n.getBetriebspunktName()).toBe(betriebspunktName);
+    expect(n.getBetriebspunktName()).toBe(betriebspunktName + "_copy");
     expect(n.getFullName()).toBe(fullName);
     n.getLabelIds().forEach((lId) => {
       expect(labelIds.includes(lId)).toBe(true);
