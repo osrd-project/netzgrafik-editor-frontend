@@ -96,6 +96,16 @@ export class NodeService implements OnDestroy {
       }
       return node;
     });
+
+    // compare the max id with the existing Node.betriebspunktName starting by "id"
+    this.nodesStore.nodes
+      .filter((node) => node.isDefaultBetriebspunktName())
+      .map((node) => Number(node.getBetriebspunktName().substring(2)))
+      .forEach((nodeId) => {
+        if (nodeId > Node.currentId) {
+          Node.currentId = nodeId;
+        }
+      });
   }
 
   mergeNodes(nodes: NodeDto[]): Map<number, number> {
@@ -105,7 +115,7 @@ export class NodeService implements OnDestroy {
         (n) => n.getBetriebspunktName() === node.betriebspunktName,
       );
       if (existingNode === undefined) {
-        this.addNodeWithPosition(
+        const addedNode = this.addNodeWithPosition(
           node.positionX,
           node.positionY,
           node.betriebspunktName,
@@ -113,15 +123,13 @@ export class NodeService implements OnDestroy {
           node.labelIds,
           node.isCollapsed,
         );
+        nodeMap.set(node.id, addedNode.getId());
       } else {
         const existingLabels = existingNode.getLabelIds();
         const allLabels = node.labelIds.concat(existingLabels);
         existingNode.setLabelIds(allLabels.filter((v, i, a) => a.indexOf(v) === i));
+        nodeMap.set(node.id, existingNode.getId());
       }
-      const addedNode = this.nodesStore.nodes.find(
-        (n) => n.getBetriebspunktName() === node.betriebspunktName,
-      );
-      nodeMap.set(node.id, addedNode.getId());
     });
     return nodeMap;
   }
@@ -242,7 +250,7 @@ export class NodeService implements OnDestroy {
       node.setConnectionTime(baseData.getConnectionTime());
     }
     if (betriebspunktName !== undefined) {
-      node.setBetriebspunktName(betriebspunktName);
+      node.setBetriebspunktName(betriebspunktName + "_copy"); // ensure node.id and node.betriebspunktName do not collide after duplication
     }
     if (fullName !== undefined) {
       node.setFullName(fullName);
@@ -264,7 +272,6 @@ export class NodeService implements OnDestroy {
   addEmptyNode(positionX: number, positionY: number): Node {
     const node: Node = new Node();
     node.setFullName("");
-    node.setBetriebspunktName("");
     node.setPosition(positionX, positionY);
     node.setIsCollapsed(true);
     const resource: Resource = this.resourceService.createAndGetResource();
