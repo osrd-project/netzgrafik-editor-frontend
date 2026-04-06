@@ -22,7 +22,6 @@ import {PerlenketteConnection} from "../model/perlenketteConnection";
 import {PerlenketteItem} from "../model/perlenketteItem";
 import {UiInteractionService} from "../../services/ui/ui.interaction.service";
 import {VersionControlService} from "../../services/data/version-control.service";
-import {MathUtils} from "../../utils/math";
 
 @Component({
   selector: "sbb-perlenkette-node",
