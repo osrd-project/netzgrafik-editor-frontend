@@ -282,6 +282,7 @@ export class NodeService implements OnDestroy {
     );
     this.filterService.clearDeletetFilterNodeLabels(deletetLabelIds);
     this.deleteNodeWithoutUpdate(nodeId, enforceUpdate);
+    this.initPortOrdering();
     if (enforceUpdate) {
       this.initPortOrdering();
       this.trainrunSectionService.trainrunSectionsUpdated();
@@ -1238,13 +1239,18 @@ export class NodeService implements OnDestroy {
     const node = this.getNodeFromId(nodeId);
     const connectedTrainrunSections = node.getConnectedTrainrunSections();
     if (connectedTrainrunSections.length !== 0) {
+      // hack: reconnect trainrun sections when the trainrun transits through the node
+      node.getTransitions().forEach((transition) => {
+        this.undockTransition(nodeId, transition.getId());
+      });
+      // hack: and delete the lonely trainrun sections ending in the node
       this.trainrunSectionService.deleteListOfTrainrunSections(
         node.getConnectedTrainrunSections(),
         enforceUpdate,
       );
-      const trainruns = new Set<Trainrun>();
-      connectedTrainrunSections.forEach((trs) => trainruns.add(trs.getTrainrun()));
-      trainruns.forEach((t) => {
+      const trainrunsToUpdate = new Set<Trainrun>();
+      connectedTrainrunSections.forEach((trs) => trainrunsToUpdate.add(trs.getTrainrun()));
+      trainrunsToUpdate.forEach((t) => {
         if (!this.trainrunSectionService.getAllTrainrunSectionsForTrainrun(t.getId()).length) {
           return;
         }
