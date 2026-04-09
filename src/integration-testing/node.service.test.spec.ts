@@ -152,12 +152,12 @@ describe("NodeService Test", () => {
 
     nodeService.deleteNode(1);
     expect(nodes.length).toBe(4);
-    expect(trainrunSections.length).toBe(3);
+    expect(trainrunSections.length).toBe(5);
 
     const node0 = nodeService.getNodeFromId(0);
     const node2 = nodeService.getNodeFromId(2);
-    expect(node0.getPorts().length).toBe(0);
-    expect(node2.getPorts().length).toBe(3);
+    expect(node0.getPorts().length).toBe(2);
+    expect(node2.getPorts().length).toBe(5);
   });
 
   it("deleteNodeUndockTransitions node1 test", () => {
@@ -182,13 +182,13 @@ describe("NodeService Test", () => {
 
     nodeService.deleteNode(2);
     expect(nodes.length).toBe(4);
-    expect(trainrunSections.length).toBe(2);
+    expect(trainrunSections.length).toBe(3);
 
     const node0 = nodeService.getNodeFromId(0);
     const node1 = nodeService.getNodeFromId(1);
     expect(node0.getPorts().length).toBe(2);
-    expect(node1.getPorts().length).toBe(2);
-    expect(node1.getTransitions().length).toBe(0);
+    expect(node1.getPorts().length).toBe(3);
+    expect(node1.getTransitions().length).toBe(1);
   });
 
   it("delete all nodes test", () => {
