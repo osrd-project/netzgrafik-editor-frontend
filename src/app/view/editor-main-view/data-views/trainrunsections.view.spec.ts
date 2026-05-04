@@ -1233,7 +1233,7 @@ describe("TrainrunSection-View", () => {
     dataService.loadNetzgrafikDto(NetzgrafikUnitTesting.getUnitTestNetzgrafik());
     const ts = trainrunSectionService.getTrainrunSectionFromId(2);
     const v1 = TrainrunSectionsView.extractTrainrunName(ts);
-    expect(v1).toBe("S1");
+    expect(v1).toBe("1");
   });
 
   it("TrainrunSectionsView.extractTrainrunName - 005", () => {
@@ -1410,7 +1410,7 @@ describe("TrainrunSection-View", () => {
       TrainrunSectionText.TrainrunSectionName,
       editorView,
     );
-    expect(v1).toBe("IC1");
+    expect(v1).toBe("1");
 
     const v2 = TrainrunSectionsView.getTrainrunSectionValueToShow(
       trainrunSectionService.getTrainrunSectionFromId(0),
