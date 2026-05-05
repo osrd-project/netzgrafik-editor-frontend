@@ -231,7 +231,12 @@ export class UiInteractionService implements OnDestroy {
     this.loadUserSettingFromLocalStorage();
     if (this.activeTheme === null) {
       // detect at initialization
-      if (false && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      const darkThemeEnabled = false;
+      if (
+        darkThemeEnabled &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
         this.setActiveTheme(new ThemeFachDark(), false);
       } else {
         this.setActiveTheme(new ThemeFach(), false);
