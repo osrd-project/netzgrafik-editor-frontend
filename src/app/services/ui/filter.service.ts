@@ -76,6 +76,11 @@ export class FilterService implements OnDestroy {
       (fs) => new FilterSetting(fs),
     );
     this.filterSettingStore.filterSettings.forEach((fs) => this.initializeFilterSetting(fs));
+
+    // hack: load the first filter setting saved if there is one
+    if (this.filterSettingStore.filterSettings.length > 0) {
+      this.activateFilterSetting(this.filterSettingStore.filterSettings[0].getId());
+    }
   }
 
   activateFilterSetting(activeFilterSettingId: number): FilterSetting {
