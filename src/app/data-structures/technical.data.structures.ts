@@ -109,10 +109,10 @@ export interface TimeFormatter {
  */
 export interface TimeLockDto {
   time: number | null; // minutes [0..60]
-  consecutiveTime: number; // automatically updated after any data changes in the application
+  consecutiveTime: number | null; // automatically updated after any data changes in the application
   lock: boolean; // used to stop the time propagation (forward/backward)
-  warning?: WarningDto; // warning - if business logic detects an issue -> set human-readable warning
-  timeFormatter?: TimeFormatter; // undefined or object - optional
+  warning?: WarningDto | null; // warning - if business logic detects an issue -> set human-readable warning
+  timeFormatter?: TimeFormatter | null; // undefined or object - optional
 }
 
 /**
