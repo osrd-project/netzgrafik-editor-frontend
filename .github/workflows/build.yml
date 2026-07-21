@@ -87,6 +87,16 @@ jobs:
           name: build-standalone
           path: dist/
 
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build
+        uses: docker/build-push-action@v7
+        with:
+          push: false
+
   build-standalonedemo:
     runs-on: ubuntu-latest
     steps:
