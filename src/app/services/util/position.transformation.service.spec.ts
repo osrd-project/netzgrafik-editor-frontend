@@ -18,6 +18,7 @@ import {NetzgrafikUnitTesting} from "../../../integration-testing/netzgrafik.uni
 import {ViewportCullService} from "../../services/ui/viewport.cull.service";
 import {PositionTransformationService} from "./position.transformation.service";
 import {Vec2D} from "../../utils/vec2D";
+import {Operation} from "../../models/operation.model";
 
 describe("PositionTransformationService", () => {
   let dataService: DataService;
@@ -158,6 +159,8 @@ describe("PositionTransformationService", () => {
 
   it("PositionTransformationService test-003", () => {
     dataService.loadNetzgrafikDto(NetzgrafikUnitTesting.getUnitTestNetzgrafik());
+    const operations: Operation[] = [];
+    positionTransformationService.operation.subscribe((operation) => operations.push(operation));
     const pos: Vec2D[] = [];
     nodeService.getNodes().forEach((n) => {
       pos.push(new Vec2D(n.getPositionX(), n.getPositionY()));
@@ -168,5 +171,26 @@ describe("PositionTransformationService", () => {
       expect(n.getPositionX()).toBe(pos[index].getX() * 2.0);
       expect(n.getPositionY()).toBe(pos[index].getY() * 2.0);
     });
+    expect(operations.filter((operation) => operation.objectType === "node").length).toBe(
+      nodeService.getNodes().length,
+    );
+    expect(operations.filter((operation) => operation.objectType === "note").length).toBe(
+      noteService.getNotes().length,
+    );
+  });
+
+  it("emits updates for each node scaled in a multiple selection", () => {
+    dataService.loadNetzgrafikDto(NetzgrafikUnitTesting.getUnitTestNetzgrafik());
+    const selectedNodes = nodeService.getNodes().slice(0, 2);
+    selectedNodes.forEach((node) => nodeService.selectNode(node.getId()));
+    const operations: Operation[] = [];
+    positionTransformationService.operation.subscribe((operation) => operations.push(operation));
+
+    positionTransformationService.scaleNetzgrafikArea(2.0, new Vec2D(0.0, 0.0), "graphContainer");
+
+    const updatedNodeIds = operations
+      .filter((operation) => operation.objectType === "node")
+      .map((operation) => operation.node.id);
+    expect(updatedNodeIds).toEqual(selectedNodes.map((node) => node.getId()));
   });
 });
