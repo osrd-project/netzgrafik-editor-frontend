@@ -20,10 +20,15 @@ import {Transition} from "../../models/transition.model";
 import {takeUntil} from "rxjs/operators";
 import {FilterService} from "../ui/filter.service";
 import {DirectedTrainrunSectionProxy, TrainrunIterator} from "../util/trainrun.iterator";
-import {Operation, OperationType, TrainrunOperation} from "../../models/operation.model";
+import {
+  Operation,
+  OperationType,
+  TrainrunCreateOperation,
+  TrainrunDeleteOperation,
+  TrainrunUpdateOperation,
+} from "../../models/operation.model";
 import {Port} from "src/app/models/port.model";
 import {Vec2D} from "src/app/utils/vec2D";
-
 interface DepartureAndArrivalTimes {
   nodeFromDepartureTime: number;
   nodeFromArrivalTime: number;
@@ -381,7 +386,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.iterateAlongTrainrunUntilEndAndPropagateTime(fromNode, fromTrainrunSectionId);
     this.trainrunSectionsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   propagateTrainrunSectionTime(
@@ -598,12 +603,14 @@ export class TrainrunSectionService implements OnDestroy {
     this.trainrunService.trainrunsUpdated();
 
     if (initialTrainrunsLength !== this.trainrunService.trainrunsStore.trainruns.length) {
-      this.operation.emit(
-        new TrainrunOperation(OperationType.create, trainrunSection.getTrainrun()),
-      );
+      this.operation.emit(new TrainrunCreateOperation(trainrunSection.getTrainrun()));
     } else {
       this.operation.emit(
-        new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()),
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "times",
+          "numberOfStops",
+        ]),
       );
     }
 
@@ -683,7 +690,11 @@ export class TrainrunSectionService implements OnDestroy {
     }
     if (emit) {
       this.operation.emit(
-        new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()),
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "numberOfStops",
+          "times",
+        ]),
       );
     }
   }
@@ -771,7 +782,11 @@ export class TrainrunSectionService implements OnDestroy {
     }
     if (this.getAllTrainrunSectionsForTrainrun(trainrun.getId()).length && emit) {
       this.operation.emit(
-        new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()),
+        new TrainrunUpdateOperation(trainrunSection.getTrainrun(), [
+          "nodes",
+          "numberOfStops",
+          "times",
+        ]),
       );
     }
   }
@@ -817,7 +832,7 @@ export class TrainrunSectionService implements OnDestroy {
   ) {
     this.updateTrainrunSectionLeftAndRightTimes(section, timeStructure);
     this.operation.emit(
-      new TrainrunOperation(OperationType.update, section.trainrunSection.getTrainrun()),
+      new TrainrunUpdateOperation(section.trainrunSection.getTrainrun(), ["times"]),
     );
   }
 
@@ -893,7 +908,7 @@ export class TrainrunSectionService implements OnDestroy {
 
     this.trainrunSectionsUpdated();
     this.nodeService.connectionsUpdated();
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   private setTimeStructureInDirection({
@@ -1099,6 +1114,13 @@ export class TrainrunSectionService implements OnDestroy {
       this.nodeService.transitionsUpdated();
       this.nodeService.connectionsUpdated();
       this.trainrunSectionsUpdated();
+      this.operation.emit(
+        new TrainrunUpdateOperation(trainrunSection1.getTrainrun(), [
+          "nodes",
+          "times",
+          "numberOfStops",
+        ]),
+      );
     }
     return {
       existingTrainrunSection: trainrunSection1,
@@ -1120,7 +1142,7 @@ export class TrainrunSectionService implements OnDestroy {
     );
 
     this.replaceIntermediateStopWithNode(trainrunSection.getId(), newNode.getId(), true);
-    this.operation.emit(new TrainrunOperation(OperationType.update, trainrunSection.getTrainrun()));
+    this.operation.emit(new TrainrunUpdateOperation(trainrunSection.getTrainrun(), ["times"]));
   }
 
   removeIntermediateStopOnTrainrunSection(initialTrainrunSection: TrainrunSection): boolean {
